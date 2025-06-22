@@ -62,14 +62,14 @@ def sign_in(email, password):
 
     return {"message": "Signed in successfully", "token": token}
 
-def verify_token(token):
-    try:
-        decoded = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        return {"valid": True, "data": decoded}
-    except jwt.ExpiredSignatureError:
-        return {"message": "Expired Token", "valid": False}
-    except jwt.InvalidTokenError:
-        return {"message": "Invalid Token", "valid": False}
+# def verify_token(token):
+#     try:
+#         decoded = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+#         return {"valid": True, "data": decoded}
+#     except jwt.ExpiredSignatureError:
+#         return {"message": "Expired Token", "valid": False}
+#     except jwt.InvalidTokenError:
+#         return {"message": "Invalid Token", "valid": False}
 
 def decode_token(token):
     try:
@@ -80,23 +80,23 @@ def decode_token(token):
     except jwt.InvalidTokenError:
         return {"message": "Invalid Token"}
 
-def insert_currency_data(token, pair, price, time, date):
-    auth_result = verify_token(token)
+# def insert_currency_data(token, pair, price, time, date):
+#     auth_result = verify_token(token)
 
-    if not auth_result["valid"]:
-        return {"message": "Token Invalid or Expired"}
+#     if not auth_result["valid"]:
+#         return {"message": "Token Invalid or Expired"}
     
-    user_email = auth_result["data"]["email"]
+#     user_email = auth_result["data"]["email"]
 
-    supabase.table("currency_data").insert({
-        "email": user_email,
-        "pair": pair,
-        "price": price,
-        "time": time,
-        "date": date
-    }).execute()
+#     supabase.table("currency_data").insert({
+#         "email": user_email,
+#         "pair": pair,
+#         "price": price,
+#         "time": time,
+#         "date": date
+#     }).execute()
 
-    return "Data saved successfully !"
+#     return "Data saved successfully !"
 
 # if __name__ == "__main__":
 #     result = sign_in("chanh@gmail.com", "123456789")
