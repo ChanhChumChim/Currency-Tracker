@@ -4,16 +4,19 @@ import os
 
 load_dotenv()
 
-url = "https://api.apilayer.com/exchangerates_data/latest?symbols=USD&base=XAU"
 
-payload = {}
+def get_result(base_name, symbols_name):
+  url = f"https://api.apilayer.com/exchangerates_data/latest?symbols={symbols_name}&base={base_name}"
 
-headers= {
-  "apikey": os.getenv("EXCHANGE_RATE_API_KEY")
-}
+  payload = {}
 
-response = requests.request("GET", url, headers=headers, data = payload)
+  headers= {
+    "apikey": os.getenv("EXCHANGE_RATE_API_KEY")
+  }
 
-result = response.json()
+  response = requests.request("GET", url, headers=headers, data = payload)
 
-print(result)
+  if response.status_code != 200:
+    return None
+
+  return response.json()
